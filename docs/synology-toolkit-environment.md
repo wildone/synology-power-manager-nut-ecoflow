@@ -91,3 +91,33 @@ docker compose exec synology-toolchain bash
 ```
 - Inside the container, package sources live at `/workspace/synology` and toolkit scripts at `/toolkit/pkgscripts-ng`.
 - Set `DSM_PLATFORM`, `DSM_VERSION`, or `ENVDEPLOY_OFFLINE=true` (reuse cached tarballs) in the compose file or via `docker compose run -e` flags as needed.
+
+## 6. Building PowerManagerNutEcoFlow Locally
+1. **Sync sources into the toolkit** (PkgCreate expects projects under `/toolkit/source/<package>`):
+   ```
+   docker compose exec synology-toolchain bash -lc \
+     "rm -rf /toolkit/source/PowerManagerNutEcoFlow && \
+      mkdir -p /toolkit/source/PowerManagerNutEcoFlow && \
+      cp -a /workspace/synology/PowerManagerNutEcoFlow/. \
+           /toolkit/source/PowerManagerNutEcoFlow/"
+   ```
+2. **Run the Synology builder** (adjust platform/version as required):
+   ```
+   docker compose exec synology-toolchain bash -lc \
+     "cd /toolkit/pkgscripts-ng && \
+      ./PkgCreate.py -v 7.2 -p apollolake -c PowerManagerNutEcoFlow"
+   ```
+   The script orchestrates the `SynoBuildConf/build` and `install` hooks, producing staging output in `/toolkit/build_env/ds.<platform>-<version>/tmp/_install`.
+3. **Create the `.spk` artifact** from the staged install tree:
+   ```
+   docker compose exec synology-toolchain bash -lc \
+     "chroot /toolkit/build_env/ds.apollolake-7.2 \
+        /pkgscripts-ng/include/pkg_util.sh make_spk \
+        /tmp/_install /tmp/_spk_output"
+   docker compose exec synology-toolchain bash -lc \
+     "cp /toolkit/build_env/ds.apollolake-7.2/tmp/_spk_output/PowerManagerNutEcoFlow-apollolake-0.1.0.spk \
+         /workspace/synology/"
+   ```
+   Replace `apollolake` and the version number when targeting other platforms or releases. The resulting `.spk` is copied back to the repository under `synology/` for manual installation or further distribution.
+
+> **Tip:** If you rebuild frequently, wrap the copy + `PkgCreate.py` + `make_spk` sequence in a helper script so the workflow becomes a single command.

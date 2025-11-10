@@ -1,0 +1,1 @@
+{"ExamplePackage.js":{"SYNO.SDS.App.PowerManagerNUT.Instance":{"depend":[],"allowMultiInstance":false,"appWindow":"SYNO.SDS.App.PowerManagerNUT.Instance","allUsers":true,"texts":"texts","title":"Power Manager NUT","hidden":false,"type":"app","icon":"images\/{0}.png"}}}

@@ -1,0 +1,45 @@
+(*
+Module: NutHostsConf
+ Parses /home/efsz/proj/ps-003/ef-nut/x86_64-pc-linux-gnu-nut-server/etc/hosts.conf
+
+Author: Frederic Bohe  <fredericbohe@eaton.com>
+
+About: License
+  This file is licensed under the GPL.
+
+About: Lens Usage
+  Sample usage of this lens in augtool
+
+    * Print all monitored upsd
+	> print /files/home/efsz/proj/ps-003/ef-nut/x86_64-pc-linux-gnu-nut-server/etc/hosts.conf/MONITOR
+
+About: Configuration files
+  This lens applies to /home/efsz/proj/ps-003/ef-nut/x86_64-pc-linux-gnu-nut-server/etc/hosts.conf. See <filter>.
+*)
+
+module NutHostsConf =
+  autoload hosts_xfm
+
+(************************************************************************
+ * Group:                 HOSTS.CONF
+ *************************************************************************)
+
+(* general *)
+let del_spc  = Util.del_opt_ws ""
+let sep_spc  = Util.del_ws_spc
+let eol      = Util.eol
+let word     = /[^"#; \t\n]+/
+let empty    = Util.empty
+let comment  = Util.comment
+let quoted_string = del "\"" "\"" . store /[^"\n]+/ . del "\"" "\""
+
+let hosts_notify = [ del_spc . key "MONITOR" . sep_spc
+                         . [ label "system" . store word . sep_spc ]
+                         . [ label "description" . quoted_string ] . eol ]
+
+let hosts_lns    = (hosts_notify|comment|empty)*
+
+let hosts_filter = ( incl "/home/efsz/proj/ps-003/ef-nut/x86_64-pc-linux-gnu-nut-server/etc/hosts.conf" )
+                        . Util.stdexcl
+
+let hosts_xfm    = transform hosts_lns hosts_filter

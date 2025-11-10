@@ -1,0 +1,14 @@
+#!/bin/bash
+# Pre-install script creates required directories before package extraction.
+set -euo pipefail
+
+readonly PACKAGE_NAME="PowerManagerNutEcoFlow"
+readonly TARGET_ROOT="/var/packages/${PACKAGE_NAME}"
+readonly TARGET_DIR="${TARGET_ROOT}/target"
+
+if [ "$SYNOPKG_PKG_STATUS" = "INSTALL" ]; then
+    mkdir -p "${TARGET_DIR}/usr/local/bin/nas"
+    mkdir -p "${TARGET_DIR}/var/log"
+fi
+
+exit 0

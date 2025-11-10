@@ -1,0 +1,15 @@
+#!/bin/bash
+# Pre-upgrade script preserves service configuration prior to package upgrade.
+set -euo pipefail
+
+readonly PACKAGE_NAME="PowerManagerNutEcoFlow"
+readonly TARGET_ROOT="/var/packages/${PACKAGE_NAME}"
+readonly TARGET_ETC="${TARGET_ROOT}/target/etc"
+readonly BACKUP_DIR="${SYNOPKG_TEMP_UPGRADE_FOLDER}/backup"
+
+mkdir -p "${BACKUP_DIR}"
+if [ -d "${TARGET_ETC}" ]; then
+    cp -a "${TARGET_ETC}" "${BACKUP_DIR}/etc"
+fi
+
+exit 0

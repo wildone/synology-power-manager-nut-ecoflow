@@ -1,0 +1,15 @@
+#!/bin/bash
+# Pre-replace script runs when DSM reinstall is triggered; it backs up configuration.
+set -euo pipefail
+
+readonly PACKAGE_NAME="PowerManagerNutEcoFlow"
+readonly TARGET_ROOT="/var/packages/${PACKAGE_NAME}"
+readonly TARGET_ETC="${TARGET_ROOT}/target/etc"
+readonly BACKUP_DIR="${SYNOPKG_TEMP_REPLACE_FOLDER}/backup"
+
+mkdir -p "${BACKUP_DIR}"
+if [ -d "${TARGET_ETC}" ]; then
+    cp -a "${TARGET_ETC}" "${BACKUP_DIR}/etc"
+fi
+
+exit 0

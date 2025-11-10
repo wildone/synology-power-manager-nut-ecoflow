@@ -1,0 +1,23 @@
+[wizard]
+port = "port"
+wizard_set_data_title = "Setting your data"
+
+[ui]
+db_new_password = "Password"
+db_confirm_password = "Confirm Password"
+invalid_user_password = "Password Invalid!! The minimum password length is 10 characters"
+
+web_ups_server_app_name = "Power Manager NUT"
+web_ups_server_app_button_start = "Démarrer le service"
+web_ups_server_app_guide_step_1_desc = "Connectez le périphérique NAS à la station électrique."
+web_ups_server_app_guide_title_desc = "Effectuez les étapes suivantes avant de démarrer le service Power Manager NUT"
+web_ups_server_app_guide_step_2_desc = "Assurez-vous que PowerManager est sélectionné dans « Simple Permission Manager » > « Packages »."
+web_ups_server_app_guide_success_title = "Démarrage effectué"
+web_ups_server_app_guide_success_content = "La connexion a été établie. Power Manager est maintenant prêt à être utilisé."
+web_ups_server_app_guide_fail_title = "Échec du démarrage du service. Veuillez réessayer."
+web_ups_server_app_guide_fail_content = "Assurez-vous que le service NAS a été correctement connecté à la station électrique et que l'autorisation a été activée."
+web_ups_server_app_button_retry = "Réessayer"
+web_ups_server_app_button_stop = "Arrêter le service"
+web_ups_server_app_button_view_log = "Voir les journaux"
+web_ups_server_app_button_status_loading = "Démarrage en cours… Veuillez patienter."
+button_back = "Retour"

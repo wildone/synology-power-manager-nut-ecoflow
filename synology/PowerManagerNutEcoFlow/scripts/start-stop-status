@@ -1,0 +1,45 @@
+#!/bin/sh
+# DSM lifecycle script for PowerManagerNutEcoFlow
+set -e
+
+RUN_SH="/var/packages/PowerManagerNutEcoFlow/target/usr/local/bin/nas/run.sh"
+LOG_FILE="/var/packages/PowerManagerNutEcoFlow/target/var/log/run.sh.log"
+
+timestamp() { date "+%a %b %d %H:%M:%S %Z %Y"; }
+
+case "$1" in
+  start)
+    echo "===== run.sh start $(timestamp) =====" >>"$LOG_FILE"
+    /bin/bash "$RUN_SH"
+    ;;
+  stop)
+    echo "===== run.sh stop $(timestamp) =====" >>"$LOG_FILE"
+    echo "[INFO] PowerManagerNutEcoFlow stopping (DSM stop)..." >>"$LOG_FILE"
+    for p in usbhid-ups upsd upsmon; do
+      pkill -f "$p" 2>/dev/null || true
+    done
+    sleep 1
+    if ps | grep -Eq "usbhid-ups|upsd|upsmon"; then
+      echo "[WARN] Some NUT processes still appear to be running after stop" >>"$LOG_FILE"
+    else
+      echo "[INFO] All NUT processes stopped cleanly" >>"$LOG_FILE"
+    fi
+    ;;
+  status)
+    if ps | grep -Eq "usbhid-ups|upsd|upsmon"; then
+      echo "running"
+      echo "===== run.sh status $(timestamp) =====" >>"$LOG_FILE"
+      echo "[INFO] PowerManagerNutEcoFlow status: running" >>"$LOG_FILE"
+    else
+      echo "stopped"
+      echo "===== run.sh status $(timestamp) =====" >>"$LOG_FILE"
+      echo "[INFO] PowerManagerNutEcoFlow status: stopped" >>"$LOG_FILE"
+    fi
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|status}" >&2
+    exit 1
+    ;;
+esac
+
+exit 0

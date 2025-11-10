@@ -1,0 +1,18 @@
+#!/bin/bash
+# Build stage script executed inside Synology toolkit environment.
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+RUN_SCRIPT="${PROJECT_ROOT}/package/usr/local/bin/nas/run.sh"
+SHUTDOWN_SCRIPT="${PROJECT_ROOT}/package/usr/local/bin/nas/x86_64-pc-linux-gnu-nut-server/script/eco_shutdown.sh"
+SETUP_SCRIPT="${PROJECT_ROOT}/package/usr/local/bin/nas/x86_64-pc-linux-gnu-nut-server/script/setup_env.sh"
+
+chmod 755 "${RUN_SCRIPT}"
+chmod 755 "${SHUTDOWN_SCRIPT}"
+chmod 755 "${SETUP_SCRIPT}"
+
+# Ensure all CGI helpers remain executable
+find "${PROJECT_ROOT}/package/usr/local/bin" -type f -name "*.cgi" -exec chmod 755 {} +
+
+exit 0

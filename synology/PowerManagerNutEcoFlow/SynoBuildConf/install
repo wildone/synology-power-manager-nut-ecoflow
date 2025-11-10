@@ -1,0 +1,17 @@
+#!/bin/bash
+# Install stage assembles package.tgz from prepared payload files.
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+PACKAGE_NAME="PowerManagerNutEcoFlow"
+STAGING_DIR="/tmp/${PACKAGE_NAME}_package"
+PAYLOAD_DIR="${PROJECT_ROOT}/package"
+
+rm -rf "${STAGING_DIR}"
+mkdir -p "${STAGING_DIR}"
+cp -a "${PAYLOAD_DIR}/." "${STAGING_DIR}/"
+
+pkg_make_package "${STAGING_DIR}" "${PKG_DIR}"
+
+exit 0

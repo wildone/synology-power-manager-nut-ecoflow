@@ -1,0 +1,13 @@
+prefix=/home/efsz/proj/ps-003/ef-nut/x86_64-pc-linux-gnu-nut-server
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+sysconfdir=/home/efsz/proj/ps-003/ef-nut/x86_64-pc-linux-gnu-nut-server/etc
+statepath=/home/efsz/proj/ps-003/ef-nut/x86_64-pc-linux-gnu-nut-server/var/state/ups
+nutuser=root
+
+Name: libnutclient
+Description: UPS monitoring with Network UPS Tools
+Version: 2.8.2
+Libs: -L${libdir} -lnutclient
+Cflags: -I${includedir}

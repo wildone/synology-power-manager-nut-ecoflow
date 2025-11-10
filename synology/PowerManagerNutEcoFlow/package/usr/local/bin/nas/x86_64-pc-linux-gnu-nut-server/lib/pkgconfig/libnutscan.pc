@@ -1,0 +1,10 @@
+prefix=/home/efsz/proj/ps-003/ef-nut/x86_64-pc-linux-gnu-nut-server
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: libnutscan
+Description: Power devices discovery with Network UPS Tools
+Version: 2.8.2
+Libs: -L${libdir} -lnutscan
+Cflags: -I${includedir}

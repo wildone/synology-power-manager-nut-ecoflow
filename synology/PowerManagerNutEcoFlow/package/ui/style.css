@@ -1,0 +1,353 @@
+/* 自定义整个滚动条 */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* 滚动条轨道 */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* 滚动条滑块 */
+::-webkit-scrollbar-thumb {
+  background-color: #d8d8d8;
+  transition: background-color 0.5s;
+  border-radius: 5px;
+}
+
+/* 滑块悬停时的样式 */
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(148, 148, 148);
+  /* box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); */
+}
+
+svg {
+  flex: auto 0 0;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.check-log {
+  min-width: 96px;
+  height: 27px;
+  background: rgba(57, 111, 229, 0.12);
+  border-radius: 14px;
+  font-size: 12px;
+  font-family: PingFang SC, PingFang SC-Medium;
+  font-weight: 500;
+  text-align: left;
+  color: rgba(58, 111, 229, 0.92);
+  line-height: 17px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  position: absolute;
+  right: 14px;
+  top: 20px;
+  cursor: pointer;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.main-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.install-title {
+  width: 400px;
+  /* height: 20px; */
+  font-size: 14px;
+  font-family: PingFang SC, PingFang SC-Semibold;
+  font-weight: 600;
+  text-align: center;
+  color: #000000;
+  line-height: 20px;
+}
+
+.step-item1 {
+  width: 500px;
+  /* height: 64px; */
+  background: #f5f7f9;
+  border-radius: 8px;
+  margin-top: 18px;
+  padding: 17px 20px 17px 26px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+
+.step-item1-desc {
+  /* max-width: 374px;
+  min-width: 314px; */
+  /* height: 20px; */
+  font-size: 14px;
+  font-family: PingFang SC, PingFang SC-Medium;
+  font-weight: 500;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.65);
+  line-height: 20px;
+  margin-left: 14px;
+  flex: 1;
+  margin-right: 12px;
+  word-break: break-word;
+}
+
+.step-item2 {
+  width: 500px;
+  /* height: 64px; */
+  background: #f5f7f9;
+  border-radius: 8px;
+  margin-top: 28px;
+  padding: 17px 20px 17px 26px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+
+.step-item2-desc {
+  /* max-width: 374px;
+  min-width: 314px; */
+  /* height: 20px; */
+  font-size: 14px;
+  font-family: PingFang SC, PingFang SC-Medium;
+  font-weight: 500;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.65);
+  line-height: 20px;
+  margin-left: 14px;
+  flex: 1;
+  margin-right: 12px;
+  word-break: break-word;
+}
+
+.step-item-icons {
+  width: 30px;
+  height: 30px;
+}
+
+.btn-start {
+  width: 240px;
+  height: 40px;
+  background: #396fe5;
+  border-radius: 6px;
+  border: 0;
+  font-size: 14px;
+  font-family: Manrope, Manrope-Semibold;
+  font-weight: 600;
+  text-align: center;
+  color: #ffffff;
+  line-height: 19px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.btn-starting {
+  width: 240px;
+  height: 40px;
+  background: rgba(57, 111, 229, 0.5);
+  border-radius: 6px;
+  border: 0;
+  font-size: 14px;
+  font-family: Manrope, Manrope-Semibold;
+  font-weight: 600;
+  text-align: center;
+  color: #ffffff;
+  line-height: 19px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  cursor: not-allowed;
+}
+
+.btn-retry {
+  width: 240px;
+  height: 40px;
+  background: #f2f3f5;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: Manrope, Manrope-Semibold;
+  font-weight: 600;
+  text-align: center;
+  color: #000000;
+  line-height: 19px;
+  border: 0;
+  cursor: pointer;
+}
+
+.main-content.log {
+  position: absolute;
+  background: #fff;
+  left: 0;
+  top: 0;
+}
+
+.log-container {
+  width: 558px;
+  height: 326px;
+  background: #f5f7f9;
+  border-radius: 6px;
+  /* overflow-y: auto; */
+  padding: 16px;
+  padding-right: 6px;
+  /* font-size: 14px; */
+  /* font-family: PingFang SC, PingFang SC-Medium; */
+  /* font-weight: 500; */
+  /* text-align: left; */
+  /* color: rgba(0,0,0,0.65); */
+  /* line-height: 20px; */
+}
+
+.log-view {
+  overflow-y: auto;
+  /* padding: 16px; */
+  font-size: 14px;
+  font-family: PingFang SC, PingFang SC-Medium;
+  font-weight: 500;
+  text-align: left;
+  color: rgba(0, 0, 0, 0.65);
+  line-height: 20px;
+  height: 100%;
+  user-select: text;
+}
+
+.btn-exit-log {
+  width: 240px;
+  height: 40px;
+  background: #f2f3f5;
+  border-radius: 6px;
+  border: 0;
+  font-size: 14px;
+  font-family: Manrope, Manrope-Semibold;
+  font-weight: 600;
+  text-align: center;
+  color: #000000;
+  line-height: 19px;
+  cursor: pointer;
+}
+
+.boot-fail-view-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.boot-fail-view-text-title {
+  font-size: 16px;
+  font-family: PingFang SC, PingFang SC-Semibold;
+  font-weight: 600;
+  text-align: center;
+  color: #000000;
+  line-height: 22px;
+  margin-top: 18px;
+}
+
+.boot-fail-view-text-desc {
+  width: 440px;
+  word-break: break-word;
+  font-size: 14px;
+  font-family: PingFang SC, PingFang SC-Medium;
+  font-weight: 500;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.65);
+  line-height: 20px;
+  margin-top: 12px;
+}
+
+.boot-fail-view-btn-container {
+  margin-top: 100px;
+  display: flex;
+  justify-content: center;
+}
+
+.boot-fail-view-btn-retry {
+  width: 240px;
+  height: 40px;
+  background: #f2f3f5;
+  border-radius: 6px;
+  border: 0;
+  font-size: 14px;
+  font-family: Manrope, Manrope-Semibold;
+  font-weight: 600;
+  text-align: center;
+  color: #000000;
+  line-height: 19px;
+  cursor: pointer;
+}
+
+.boot-success-view-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.boot-success-view-text-title {
+  font-size: 16px;
+  font-family: PingFang SC, PingFang SC-Semibold;
+  font-weight: 600;
+  text-align: center;
+  color: #000000;
+  line-height: 22px;
+  margin-top: 18px;
+}
+
+.boot-success-view-text-desc {
+  width: 440px;
+  word-break: break-word;
+  font-size: 14px;
+  font-family: PingFang SC, PingFang SC-Medium;
+  font-weight: 500;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.65);
+  line-height: 20px;
+  margin-top: 12px;
+}
+
+.boot-success-view-btn-container {
+  margin-top: 100px;
+  display: flex;
+  justify-content: center;
+}
+
+.boot-success-view-btn-retry {
+  width: 240px;
+  height: 40px;
+  background: #f2f3f5;
+  border-radius: 6px;
+  border: 0;
+  font-size: 14px;
+  font-family: Manrope, Manrope-Semibold;
+  font-weight: 600;
+  text-align: center;
+  color: #000000;
+  line-height: 19px;
+  cursor: pointer;
+}
+
+@keyframes spin {
+  from {
+    transform: rotateZ(0deg);
+  }
+
+  to {
+    transform: rotateZ(360deg);
+  }
+}
+
+.loading {
+  animation: spin 1s linear infinite;
+}
+

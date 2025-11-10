@@ -1,0 +1,11 @@
+#!/bin/bash
+# Post-uninstall script cleans up package-specific runtime data.
+set -euo pipefail
+
+readonly CONFIG_DIR="/var/packages/PowerManagerNutEcoFlow/target/etc"
+
+if [ "$SYNOPKG_PKG_STATUS" = "UNINSTALL" ]; then
+    rm -rf "${CONFIG_DIR}"
+fi
+
+exit 0

@@ -1,0 +1,23 @@
+[wizard]
+port = "port"
+wizard_set_data_title = "Setting your data"
+
+[ui]
+db_new_password = "Password"
+db_confirm_password = "Confirm Password"
+invalid_user_password = "Password Invalid!! The minimum password length is 10 characters"
+
+web_ups_server_app_name = "Power Manager NUT"
+web_ups_server_app_button_start = "启动服务"
+web_ups_server_app_guide_step_1_desc = "将NAS与移储设备连接"
+web_ups_server_app_guide_title_desc = "请先完成以下操作，以保证正常启动服务"
+web_ups_server_app_guide_step_2_desc = "在【权限管理器-套件】中勾选Power Manager权限"
+web_ups_server_app_guide_success_title = "启动成功"
+web_ups_server_app_guide_success_content = "已建立连接，你可打开Power Manager客户端使用"
+web_ups_server_app_guide_fail_title = "启动失败，请重试"
+web_ups_server_app_guide_fail_content = "请确保已正确连接移储设备，并开启权限配置"
+web_ups_server_app_button_retry = "重试"
+web_ups_server_app_button_stop = "停止服务"
+web_ups_server_app_button_view_log = "查看日志"
+web_ups_server_app_button_status_loading = "启动中，请稍后"
+button_back = "返回"

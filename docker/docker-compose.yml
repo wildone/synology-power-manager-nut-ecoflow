@@ -1,0 +1,24 @@
+version: "3.9"
+
+services:
+  synology-toolchain:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      args:
+        PKGSCRIPTS_VERSION: "DSM7.2"
+    container_name: synology-toolchain
+    environment:
+      DSM_VERSION: "7.2"
+      DSM_PLATFORM: "apollolake"
+      TOOLKIT_ROOT: "/toolkit"
+      WORKSPACE: "/workspace"
+    volumes:
+      - ../synology:/workspace/synology:rw
+      - toolkit-data:/toolkit:rw
+    tty: true
+    stdin_open: true
+
+volumes:
+  toolkit-data:
+    driver: local

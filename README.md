@@ -2,6 +2,8 @@
 
 Package + tooling to integrate EcoFlow UPS devices with Synology DSM 7.x using Network UPS Tools (NUT).
 
+> **Community note:** if you run into problems, please open an issue—and if the package (or EcoFlow’s original build) worked for you, drop a comment so we know which setups are covered. 🙂
+
 ## Overview
 
 - Based on Synology’s `PowerManagerNUT` sources, tailored for EcoFlow EF-UPS-DELTA series.

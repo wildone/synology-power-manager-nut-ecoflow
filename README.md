@@ -14,7 +14,7 @@ Package + tooling to integrate EcoFlow UPS devices with Synology DSM 7.x using N
 ### End users (installing from a release)
 
 1. **DSM 7.1+** NAS (or Virtual DSM) with the EcoFlow UPS connected via USB.
-2. **Simple Permission Manager** package installed and activated so privileged NUT commands are auto-approved.\[ [source](https://github.com/XPEnology-Community/SimplePermissionManager) ]
+2. **Simple Permission Manager** package installed and activated so privileged NUT commands are auto-approved. https://github.com/XPEnology-Community/SimplePermissionManager
 3. Download the latest `PowerManagerNutEcoFlow-<version>.spk` from this repository’s Releases page and install it via Package Center → Manual Install.
 
 > Need additional background? Synology’s official UPS/NUT documentation and the EcoFlow guide in **`docs/EcoFlow User Manual.pdf`** remain excellent references, but they are not prerequisites for running the packaged release.
@@ -57,4 +57,4 @@ Contributions welcome—please document any script changes in `synology/README.m
 
 ## Bonus: Legacy Synology Packages
 
-If Synology has deprecated a package that you still need (for example, certain UPS/driver utilities referenced in the EcoFlow manuals), archived builds remain available at the Synology package archive: <https://archive.synology.com/download/Package>.\[ [source](https://archive.synology.com/download/Package) ]
+If Synology has deprecated a package that you still need (for example, certain UPS/driver utilities referenced in the EcoFlow manuals), archived builds remain available at the Synology package archive: https://archive.synology.com/download/Package.

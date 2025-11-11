@@ -28,13 +28,15 @@ Package + tooling to integrate EcoFlow UPS devices with Synology DSM 7.x using N
 ## Installation Quickstart
 
 1. Install and activate Simple Permission Manager on DSM.
-2. Manual install the latest release `.spk` (or build it yourself with the helper script below).
-3. Build from source (optional, for developers):
-   ```bash
-   ./scripts/build-package.sh   # runs Docker toolchain, outputs dist/PowerManagerNutEcoFlow-<platform>-<version>.spk
-   ```
-4. Upload the generated `.spk` to DSM Package Center → Manual Install.
-5. Start `Power Manager NUT EcoFlow` from Package Center; the service log is under `/var/packages/PowerManagerNutEcoFlow/target/var/log/run.sh.log`.
+2. Manual install the latest release `.spk` (Packages → Manual Install) and start the service from Package Center.
+
+Optional for developers:
+
+- Build from source:
+  ```bash
+  ./scripts/build-package.sh   # runs Docker toolchain, outputs dist/PowerManagerNutEcoFlow-<platform>-<version>.spk
+  ```
+- SSH into DSM and tail `/var/packages/PowerManagerNutEcoFlow/target/var/log/run.sh.log` if you need deeper troubleshooting.
 
 ## Manual Integration Reference
 

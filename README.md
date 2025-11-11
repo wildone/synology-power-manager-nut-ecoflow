@@ -25,6 +25,15 @@ Package + tooling to integrate EcoFlow UPS devices with Synology DSM 7.x using N
   - Docker (for the bundled toolkit container) or a Linux host with Synology’s `pkgscripts-ng`.
   - Optional: follow the step-by-step walkthrough in `docs/PowerManagerNUT + EcoFlow EF-UPS-DELTA 3 Plus.md` if you want to reproduce the manual testing flow before packaging.
 
+## Manual Integration Reference
+
+Already have the legacy EcoFlow package on your NAS? You can keep using it and just apply the latest adjustments from our docs:
+
+1. Follow the step-by-step guide in `docs/PowerManagerNUT + EcoFlow EF-UPS-DELTA 3 Plus.md`. It documents every manual change needed to bring the stock `PowerManagerNUT` package up to EcoFlow compatibility.
+2. Use `synology/README.md` as a quick diff guide—it explains how each runtime script was adapted for DSM service behaviour.
+
+This project simply bundles those manual steps into a clean package. If you prefer to stay on the manual path, the documentation remains fully usable on its own. You can always return later and install the pre-built `.spk` once you’re ready for a streamlined update or CI/CD integration.
+
 ## Installation Quickstart
 
 1. Install and activate Simple Permission Manager on DSM.
@@ -37,15 +46,6 @@ Optional for developers:
   ./scripts/build-package.sh   # runs Docker toolchain, outputs dist/PowerManagerNutEcoFlow-<platform>-<version>.spk
   ```
 - SSH into DSM and tail `/var/packages/PowerManagerNutEcoFlow/target/var/log/run.sh.log` if you need deeper troubleshooting.
-
-## Manual Integration Reference
-
-If you prefer to follow the original manual steps for EcoFlow integration or need to troubleshoot, review:
-
-- `docs/PowerManagerNUT + EcoFlow EF-UPS-DELTA 3 Plus.md` – the original echoed command list with manual testing procedures.
-- `synology/README.md` – explains how each runtime script in this package diverges from the manual doc and why.
-
-Both resources can be used side-by-side: the manual doc for deep dives, the packaged scripts for production deployment.
 
 ## Development & Testing
 

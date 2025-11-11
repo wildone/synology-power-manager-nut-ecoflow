@@ -48,3 +48,7 @@ Both resources can be used side-by-side: the manual doc for deep dives, the pack
 - GitHub Actions workflow (`.github/workflows/build-package.yml`) builds and archives the `.spk` on every push/tag.
 
 Contributions welcome—please document any script changes in `synology/README.md` to keep the manual and packaged behaviours in sync.
+
+## Bonus: Legacy Synology Packages
+
+If Synology has deprecated a package that you still need (for example, certain UPS/driver utilities referenced in the EcoFlow manuals), archived builds remain available at the Synology package archive: <https://archive.synology.com/download/Package>.\[ [source](https://archive.synology.com/download/Package) ]

@@ -11,21 +11,25 @@ Package + tooling to integrate EcoFlow UPS devices with Synology DSM 7.x using N
 
 ## Requirements
 
-- DSM 7.1+ NAS or Virtual DSM for testing.
-- Docker (for local builds) or a Linux host with Synology’s `pkgscripts-ng`.
-- EcoFlow UPS connected via USB.
-- **Packages to install on DSM**:
-  1. Official Synology “UPS Server / Network UPS Tools” (as per Synology’s package documentation).
-  2. Official EcoFlow firmware/tools referenced in `docs/EcoFlow User Manual.pdf`.
-  3. `Simple Permission Manager` (activate it after installation to grant the package the necessary privileges).\[ [source](https://github.com/XPEnology-Community/SimplePermissionManager) ]
+### End users (installing from a release)
 
-> For detailed EcoFlow setup steps, consult both the official Synology package docs and **`docs/EcoFlow User Manual.pdf`** in this repository.
+1. **DSM 7.1+** NAS (or Virtual DSM) with the EcoFlow UPS connected via USB.
+2. **Simple Permission Manager** package installed and activated so privileged NUT commands are auto-approved.\[ [source](https://github.com/XPEnology-Community/SimplePermissionManager) ]
+3. Download the latest `PowerManagerNutEcoFlow-<version>.spk` from this repository’s Releases page and install it via Package Center → Manual Install.
+
+> Need additional background? Synology’s official UPS/NUT documentation and the EcoFlow guide in **`docs/EcoFlow User Manual.pdf`** remain excellent references, but they are not prerequisites for running the packaged release.
+
+### Developers (building or customizing the package)
+
+- Everything listed for end users, plus:
+  - Docker (for the bundled toolkit container) or a Linux host with Synology’s `pkgscripts-ng`.
+  - Optional: follow the step-by-step walkthrough in `docs/PowerManagerNUT + EcoFlow EF-UPS-DELTA 3 Plus.md` if you want to reproduce the manual testing flow before packaging.
 
 ## Installation Quickstart
 
-1. Install Synology’s UPS/NUT package and EcoFlow utilities per the official manuals (see above).
-2. Install and activate Simple Permission Manager.
-3. Build this package:
+1. Install and activate Simple Permission Manager on DSM.
+2. Manual install the latest release `.spk` (or build it yourself with the helper script below).
+3. Build from source (optional, for developers):
    ```bash
    ./scripts/build-package.sh   # runs Docker toolchain, outputs dist/PowerManagerNutEcoFlow-<platform>-<version>.spk
    ```

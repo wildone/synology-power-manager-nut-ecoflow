@@ -1,12 +1,10 @@
 #!/bin/bash
-# Pre-uninstall script stops the service prior to removal.
+# Pre-uninstall script stops running services prior to removal.
 set -euo pipefail
 
-readonly SERVICE_SCRIPT="/var/packages/PowerManagerNutEcoFlow/scripts/start-stop-status"
-
-if [ "$SYNOPKG_PKG_STATUS" = "UNINSTALL" ]; then
-    if [ -x "${SERVICE_SCRIPT}" ]; then
-        "${SERVICE_SCRIPT}" stop || true
+if [ "${SYNOPKG_PKG_STATUS}" = "UNINSTALL" ] || [ "${SYNOPKG_PKG_STATUS}" = "UPGRADE" ]; then
+    if /var/packages/PowerManagerNutEcoFlow/scripts/start-stop-status status >/dev/null 2>&1; then
+        /var/packages/PowerManagerNutEcoFlow/scripts/start-stop-status stop || true
     fi
 fi
 

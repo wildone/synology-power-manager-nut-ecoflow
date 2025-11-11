@@ -1,17 +1,28 @@
 #!/bin/bash
-# Install stage assembles package.tgz from prepared payload files.
+# Install stage script assembles package archive within Synology build system.
 set -euo pipefail
 
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
-PACKAGE_NAME="PowerManagerNutEcoFlow"
-STAGING_DIR="/tmp/${PACKAGE_NAME}_package"
-PAYLOAD_DIR="${PROJECT_ROOT}/package"
+SCRIPT_PATH="${BASH_SOURCE[0]:-$0}"
+SCRIPT_DIR="$(cd "$(dirname "${SCRIPT_PATH}")" && pwd -P)"
+PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd -P)"
+INSTALL_ROOT="/tmp/_install"
+PACKAGE_SOURCE="${PROJECT_ROOT}/package"
 
-rm -rf "${STAGING_DIR}"
-mkdir -p "${STAGING_DIR}"
-cp -a "${PAYLOAD_DIR}/." "${STAGING_DIR}/"
+source /pkgscripts-ng/include/pkg_util.sh
 
-pkg_make_package "${STAGING_DIR}" "${PKG_DIR}"
+rm -rf "${INSTALL_ROOT}"
+mkdir -p "${INSTALL_ROOT}"
+
+pkg_make_package "${PACKAGE_SOURCE}" "${INSTALL_ROOT}"
+
+cp "${PROJECT_ROOT}/INFO" "${INSTALL_ROOT}/INFO"
+cp "${PROJECT_ROOT}/PACKAGE_ICON.PNG" "${INSTALL_ROOT}/PACKAGE_ICON.PNG"
+cp "${PROJECT_ROOT}/PACKAGE_ICON_256.PNG" "${INSTALL_ROOT}/PACKAGE_ICON_256.PNG"
+cp -a "${PROJECT_ROOT}/conf" "${INSTALL_ROOT}/conf"
+cp -a "${PROJECT_ROOT}/scripts" "${INSTALL_ROOT}/scripts"
+if [ -d "${PROJECT_ROOT}/WIZARD_UIFILES" ]; then
+    cp -a "${PROJECT_ROOT}/WIZARD_UIFILES" "${INSTALL_ROOT}/WIZARD_UIFILES"
+fi
 
 exit 0
+

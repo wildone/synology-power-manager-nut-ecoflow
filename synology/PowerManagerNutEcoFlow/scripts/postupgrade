@@ -1,15 +1,19 @@
 #!/bin/bash
-# Post-upgrade script restores configuration saved in preupgrade.
+# Post-upgrade script restores preserved configuration files.
 set -euo pipefail
 
 readonly PACKAGE_NAME="PowerManagerNutEcoFlow"
-readonly TARGET_ROOT="/var/packages/${PACKAGE_NAME}"
-readonly TARGET_ETC="${TARGET_ROOT}/target/etc"
-readonly BACKUP_DIR="${SYNOPKG_TEMP_UPGRADE_FOLDER}/backup/etc"
+readonly TARGET_ROOT="/var/packages/${PACKAGE_NAME}/target"
+readonly CONFIG_DIR="${TARGET_ROOT}/usr/local/bin/nas/x86_64-pc-linux-gnu-nut-server/etc"
+readonly BACKUP_DIR="${TARGET_ROOT}/var/backup"
 
-if [ -d "${BACKUP_DIR}" ]; then
-    rm -rf "${TARGET_ETC}"
-    cp -a "${BACKUP_DIR}" "${TARGET_ETC}"
+if [ "${SYNOPKG_PKG_STATUS}" = "UPGRADE" ] && [ -d "${BACKUP_DIR}" ]; then
+    for file in "ups.conf" "upsd.conf" "upsd.users" "upsmon.conf"; do
+        if [ -f "${BACKUP_DIR}/${file}" ]; then
+            cp "${BACKUP_DIR}/${file}" "${CONFIG_DIR}/${file}" || true
+        fi
+    done
+    rm -rf "${BACKUP_DIR}"
 fi
 
 exit 0

@@ -21,25 +21,18 @@ case "$1" in
     sleep 1
     if ps | grep -Eq "usbhid-ups|upsd|upsmon"; then
       echo "[WARN] Some NUT processes still appear to be running after stop" >>"$LOG_FILE"
-    else
-      echo "[INFO] All NUT processes stopped cleanly" >>"$LOG_FILE"
+      exit 1
     fi
     ;;
   status)
     if ps | grep -Eq "usbhid-ups|upsd|upsmon"; then
-      echo "running"
-      echo "===== run.sh status $(timestamp) =====" >>"$LOG_FILE"
-      echo "[INFO] PowerManagerNutEcoFlow status: running" >>"$LOG_FILE"
+      exit 0 # Running
     else
-      echo "stopped"
-      echo "===== run.sh status $(timestamp) =====" >>"$LOG_FILE"
-      echo "[INFO] PowerManagerNutEcoFlow status: stopped" >>"$LOG_FILE"
+      exit 1 # Not running
     fi
     ;;
   *)
-    echo "Usage: $0 {start|stop|status}" >&2
+    echo "Usage: $0 {start|stop|status}"
     exit 1
     ;;
 esac
-
-exit 0

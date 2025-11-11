@@ -1,11 +1,12 @@
 #!/bin/bash
-# Post-uninstall script cleans up package-specific runtime data.
+# Post-uninstall script cleans runtime directories after removal.
 set -euo pipefail
 
-readonly CONFIG_DIR="/var/packages/PowerManagerNutEcoFlow/target/etc"
+readonly TARGET_ROOT="/var/packages/PowerManagerNutEcoFlow"
+readonly TARGET_DIR="${TARGET_ROOT}/target"
 
-if [ "$SYNOPKG_PKG_STATUS" = "UNINSTALL" ]; then
-    rm -rf "${CONFIG_DIR}"
+if [ "${SYNOPKG_PKG_STATUS}" = "UNINSTALL" ]; then
+    rm -rf "${TARGET_DIR}"
 fi
 
 exit 0

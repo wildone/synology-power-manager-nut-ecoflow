@@ -8,7 +8,7 @@ readonly RUN_SH="${TARGET_ROOT}/usr/local/bin/nas/run.sh"
 readonly SHUTDOWN_SH="${TARGET_ROOT}/usr/local/bin/nas/x86_64-pc-linux-gnu-nut-server/script/eco_shutdown.sh"
 readonly LOG_DIR="${TARGET_ROOT}/var/log"
 
-if [ "$SYNOPKG_PKG_STATUS" = "INSTALL" ] || [ "$SYNOPKG_PKG_STATUS" = "UPGRADE" ]; then
+if [ "${SYNOPKG_PKG_STATUS}" = "INSTALL" ] || [ "${SYNOPKG_PKG_STATUS}" = "UPGRADE" ]; then
     mkdir -p "${LOG_DIR}"
     chmod 755 "${RUN_SH}"
     chmod 755 "${SHUTDOWN_SH}"

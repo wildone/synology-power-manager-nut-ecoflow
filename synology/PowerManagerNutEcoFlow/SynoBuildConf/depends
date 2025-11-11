@@ -1,3 +1,2 @@
-#!/bin/bash
-# No additional project dependencies at build stage.
-exit 0
+[default]
+

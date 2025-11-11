@@ -8,11 +8,14 @@ services:
       args:
         PKGSCRIPTS_VERSION: "DSM7.2"
     container_name: synology-toolchain
+    privileged: true
     environment:
       DSM_VERSION: "7.2"
       DSM_PLATFORM: "apollolake"
       TOOLKIT_ROOT: "/toolkit"
       WORKSPACE: "/workspace"
+      TAR_OPTIONS: "--no-same-owner --no-same-permissions"
+      SKIP_ENVDEPLOY: "true"
     volumes:
       - ../synology:/workspace/synology:rw
       - toolkit-data:/toolkit:rw

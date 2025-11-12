@@ -30,6 +30,10 @@ jobs:
             PowerManagerNutEcoFlow:synology/PowerManagerNutEcoFlow
           output: ./dist
 
+      - name: Discover produced SPKs
+        run: |
+          find . -maxdepth 6 -type f -name '*.spk' -print
+
       - name: Collect SPK from toolkit result
         run: |
           mkdir -p dist

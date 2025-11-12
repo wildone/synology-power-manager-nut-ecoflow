@@ -37,7 +37,7 @@ jobs:
       - name: Collect SPK from toolkit result
         run: |
           mkdir -p dist
-          find .toolkit/result_spk -type f -name '*.spk' -print -exec cp {} dist/ \;
+          find .toolkit -type f \( -path '*result_spk/*.spk' -o -path '*workspace/dist/*.spk' \) -print -exec cp {} dist/ \;
 
       - name: Upload package artifact
         uses: actions/upload-artifact@v4

@@ -22,7 +22,39 @@ source "${PROJECT_ROOT}/INFO"
 
 readonly PACKAGE_NAME="${package:?package name missing in INFO}"
 readonly PACKAGE_VERSION="${version:?version missing in INFO}"
-readonly PLATFORM="$(pkg_get_spk_platform)"
+
+declare -a PLATFORM_CANDIDATES=()
+if [ -n "${PKG_ARCH:-}" ]; then
+    PLATFORM_CANDIDATES+=("${PKG_ARCH}")
+fi
+if [ -n "${DSM_PLATFORM:-}" ]; then
+    PLATFORM_CANDIDATES+=("${DSM_PLATFORM}")
+fi
+SPK_PLATFORM_RAW="$(pkg_get_spk_platform 2>/dev/null || true)"
+if [ -n "${SPK_PLATFORM_RAW}" ]; then
+    PLATFORM_CANDIDATES+=("${SPK_PLATFORM_RAW}")
+fi
+if declare -F pkg_get_unified_platform >/dev/null; then
+    UNIFIED_PLATFORM="$(pkg_get_unified_platform 2>/dev/null || true)"
+    if [ -n "${UNIFIED_PLATFORM}" ]; then
+        PLATFORM_CANDIDATES+=("${UNIFIED_PLATFORM}")
+    fi
+fi
+
+PLATFORM=""
+for candidate in "${PLATFORM_CANDIDATES[@]}"; do
+    if [ -n "${candidate}" ] && [[ "${candidate}" != *"[ERROR"* ]]; then
+        PLATFORM="${candidate}"
+        break
+    fi
+done
+
+if [ -z "${PLATFORM}" ]; then
+    echo "[install] ERROR: Unable to determine Synology platform architecture" >&2
+    exit 1
+fi
+
+readonly PLATFORM
 readonly SPK_NAME="${PACKAGE_NAME}-${PLATFORM}-${PACKAGE_VERSION}.spk"
 
 echo "[install] Preparing install root at ${INSTALL_ROOT}"

@@ -13,6 +13,9 @@ readonly SPK_OUTPUT_DIR="/tmp/_spk_output"
 readonly DIST_DIR="/workspace/dist"
 readonly PACKAGE_SOURCE="${PROJECT_ROOT}/package"
 
+echo "[install] PROJECT_ROOT=${PROJECT_ROOT}"
+echo "[install] ROOT listing: $(ls / 2>/dev/null | tr '\n' ' ')"
+
 # shellcheck disable=SC1091 # Provided by Synology build environment
 source /pkgscripts-ng/include/pkg_util.sh
 

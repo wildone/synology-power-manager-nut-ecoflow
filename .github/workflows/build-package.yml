@@ -30,6 +30,11 @@ jobs:
             PowerManagerNutEcoFlow:synology/PowerManagerNutEcoFlow
           output: ./dist
 
+      - name: Collect SPK from toolkit result
+        run: |
+          mkdir -p dist
+          find .toolkit/result_spk -type f -name '*.spk' -print -exec cp {} dist/ \;
+
       - name: Upload package artifact
         uses: actions/upload-artifact@v4
         with:

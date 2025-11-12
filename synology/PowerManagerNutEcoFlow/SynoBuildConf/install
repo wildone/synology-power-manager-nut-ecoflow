@@ -41,6 +41,8 @@ if declare -F pkg_get_unified_platform >/dev/null; then
     fi
 fi
 
+echo "[install] PKG_ARCH='${PKG_ARCH:-}' DSM_PLATFORM='${DSM_PLATFORM:-}' INFO_arch='${arch:-undefined}' SPK_PLATFORM_RAW='${SPK_PLATFORM_RAW:-}' UNIFIED_PLATFORM='${UNIFIED_PLATFORM:-}'"
+
 PLATFORM=""
 for candidate in "${PLATFORM_CANDIDATES[@]}"; do
     if [ -n "${candidate}" ] && [[ "${candidate}" != *"[ERROR"* ]]; then
@@ -48,6 +50,16 @@ for candidate in "${PLATFORM_CANDIDATES[@]}"; do
         break
     fi
 done
+
+if [ -z "${PLATFORM}" ] && [ -d "/toolkit/build_env" ]; then
+    # Derive platform from build environment directory name (e.g. ds.apollolake-7.1).
+    FIRST_BUILD_DIR="$(find /toolkit/build_env -maxdepth 1 -mindepth 1 -type d -printf '%f\n' | head -n 1 || true)"
+    if [ -n "${FIRST_BUILD_DIR}" ]; then
+        PLATFORM="${FIRST_BUILD_DIR#ds.}"
+        PLATFORM="${PLATFORM%%-*}"
+        echo "[install] Derived platform from build environment: ${PLATFORM}"
+    fi
+fi
 
 if [ -z "${PLATFORM}" ]; then
     echo "[install] ERROR: Unable to determine Synology platform architecture" >&2

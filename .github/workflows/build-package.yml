@@ -34,7 +34,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: package-${{ matrix.dsm }}-${{ matrix.arch }}
-          path: dist/*.spk
+          path: dist/**/*.spk
 
   release:
     runs-on: ubuntu-latest

@@ -53,12 +53,17 @@ done
 
 if [ -z "${PLATFORM}" ] && [ -d "/toolkit/build_env" ]; then
     # Derive platform from build environment directory name (e.g. ds.apollolake-7.1).
-    FIRST_BUILD_DIR="$(find /toolkit/build_env -maxdepth 1 -mindepth 1 -type d -printf '%f\n' | head -n 1 || true)"
+    FIRST_BUILD_DIR="$(find /toolkit/build_env -maxdepth 1 -mindepth 1 -type d -printf '%f\n' 2>/dev/null | grep -v '^ds\.base-' | head -n 1 || true)"
     if [ -n "${FIRST_BUILD_DIR}" ]; then
         PLATFORM="${FIRST_BUILD_DIR#ds.}"
         PLATFORM="${PLATFORM%%-*}"
         echo "[install] Derived platform from build environment: ${PLATFORM}"
     fi
+fi
+
+if [ -z "${PLATFORM}" ] && [ -n "${arch:-}" ]; then
+    PLATFORM="${arch}"
+    echo "[install] Falling back to INFO arch value: ${PLATFORM}"
 fi
 
 if [ -z "${PLATFORM}" ]; then

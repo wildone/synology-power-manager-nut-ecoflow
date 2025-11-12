@@ -67,6 +67,8 @@ if [ -z "${PLATFORM}" ] && [ -d "/toolkit/build_env" ]; then
                 break
             fi
         done
+    else
+        echo "[install] No build environment directories found under /toolkit/build_env"
     fi
 fi
 

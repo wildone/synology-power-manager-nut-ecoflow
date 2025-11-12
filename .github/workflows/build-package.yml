@@ -29,6 +29,9 @@ jobs:
           projects: |
             PowerManagerNutEcoFlow:synology/PowerManagerNutEcoFlow
           output: ./dist
+        env:
+          PKG_ARCH: ${{ matrix.arch }}
+          DSM_PLATFORM: ${{ matrix.arch }}
 
       - name: Discover produced SPKs
         run: |

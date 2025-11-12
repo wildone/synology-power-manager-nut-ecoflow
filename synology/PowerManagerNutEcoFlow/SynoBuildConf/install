@@ -1,20 +1,38 @@
 #!/bin/bash
 # Install stage script assembles package archive within Synology build system.
+# - Generates package.tgz from the staged payload.
+# - Copies metadata files required for spk creation.
+# - Produces the final .spk and copies it to /workspace/dist for CI to upload.
 set -euo pipefail
 
-SCRIPT_PATH="${BASH_SOURCE[0]:-$0}"
-SCRIPT_DIR="$(cd "$(dirname "${SCRIPT_PATH}")" && pwd -P)"
-PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd -P)"
-INSTALL_ROOT="/tmp/_install"
-PACKAGE_SOURCE="${PROJECT_ROOT}/package"
+readonly SCRIPT_PATH="${BASH_SOURCE[0]:-$0}"
+readonly SCRIPT_DIR="$(cd "$(dirname "${SCRIPT_PATH}")" && pwd -P)"
+readonly PROJECT_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd -P)"
+readonly INSTALL_ROOT="/tmp/_install"
+readonly SPK_OUTPUT_DIR="/tmp/_spk_output"
+readonly DIST_DIR="/workspace/dist"
+readonly PACKAGE_SOURCE="${PROJECT_ROOT}/package"
 
+# shellcheck disable=SC1091 # Provided by Synology build environment
 source /pkgscripts-ng/include/pkg_util.sh
 
+# Source INFO to obtain package metadata fields (package name, version, etc.).
+# shellcheck disable=SC1091
+source "${PROJECT_ROOT}/INFO"
+
+readonly PACKAGE_NAME="${package:?package name missing in INFO}"
+readonly PACKAGE_VERSION="${version:?version missing in INFO}"
+readonly PLATFORM="$(pkg_get_spk_platform)"
+readonly SPK_NAME="${PACKAGE_NAME}-${PLATFORM}-${PACKAGE_VERSION}.spk"
+
+echo "[install] Preparing install root at ${INSTALL_ROOT}"
 rm -rf "${INSTALL_ROOT}"
 mkdir -p "${INSTALL_ROOT}"
 
+echo "[install] Creating package.tgz from ${PACKAGE_SOURCE}"
 pkg_make_package "${PACKAGE_SOURCE}" "${INSTALL_ROOT}"
 
+echo "[install] Copying package metadata into install root"
 cp "${PROJECT_ROOT}/INFO" "${INSTALL_ROOT}/INFO"
 cp "${PROJECT_ROOT}/PACKAGE_ICON.PNG" "${INSTALL_ROOT}/PACKAGE_ICON.PNG"
 cp "${PROJECT_ROOT}/PACKAGE_ICON_256.PNG" "${INSTALL_ROOT}/PACKAGE_ICON_256.PNG"
@@ -23,6 +41,17 @@ cp -a "${PROJECT_ROOT}/scripts" "${INSTALL_ROOT}/scripts"
 if [ -d "${PROJECT_ROOT}/WIZARD_UIFILES" ]; then
     cp -a "${PROJECT_ROOT}/WIZARD_UIFILES" "${INSTALL_ROOT}/WIZARD_UIFILES"
 fi
+
+echo "[install] Generating ${SPK_NAME}"
+rm -rf "${SPK_OUTPUT_DIR}"
+mkdir -p "${SPK_OUTPUT_DIR}"
+pkg_make_spk "${INSTALL_ROOT}" "${SPK_OUTPUT_DIR}" "${SPK_NAME}"
+
+echo "[install] Copying ${SPK_NAME} into ${DIST_DIR}"
+mkdir -p "${DIST_DIR}"
+cp "${SPK_OUTPUT_DIR}/${SPK_NAME}" "${DIST_DIR}/${SPK_NAME}"
+
+echo "[install] Install stage completed successfully"
 
 exit 0
 
